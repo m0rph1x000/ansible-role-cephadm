@@ -1,0 +1,9 @@
+---
+- name: "Update {{ ansible_os_family }} repositories cache"
+  apt: update_cache=yes
+
+- name: Install all the CEPHADM dependencies.
+  apt:
+    name:
+      - python3
+    state: latest

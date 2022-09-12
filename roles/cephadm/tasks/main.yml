@@ -1,0 +1,26 @@
+---
+- name: Install Ansible via curl-based installation.
+  get_url:
+    url: "{{ cephadm_recent_version_url }}"
+    dest: /tmp
+    mode: "0755"
+
+- name: Use the cephadm binary in order to add the needed repository.
+  shell:
+    cmd: ./cephadm add-repo --release octopus
+    chdir: /tmp
+
+- name: Install the cephadm package, so that the binary will show up in your $PATH
+  shell:
+    cmd: ./cephadm install
+    chdir: /tmp
+
+- name: Install the ceph-common package using cephadm.
+  shell: cephadm install ceph-common
+
+- name: Create the data directory for Ceph in the bootstrap machine.
+  file:
+    path: /etc/ceph
+    state: directory
+- name: start the boostrap process.
+  shell: "cephadm bootstrap --mon-ip {{ mon_ip }}"

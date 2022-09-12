@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+
+  roles:
+    #- name: dependencies
+    #- name: m0rph1x000.ansible_role_install_podman
+    - name: cephadm
